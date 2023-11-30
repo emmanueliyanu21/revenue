@@ -1,0 +1,57 @@
+.desktop .settings {
+  display: flex;
+  align-items: center;
+  background-color: #dbdee5;
+  border-radius: 32px;
+  padding: 5px 10px 5px 5px;
+}
+.settings .usericon {
+  width: 32px;
+  height: 32px;
+  border-radius: 100px;
+  background-image: linear-gradient(to right, #5c6670, #131316);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.submenu-container .inactive-widget {
+  opacity: 0;
+  visibility: hidden;
+}
+.menu-item {
+  border-radius: 50px !important;
+}
+.submenu-container .active-widget {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1s;
+}
+.submenu {
+  margin-top: 15px;
+  border-radius: 12px !important;
+}
+.mobile-submenu {
+  margin-top: 0;
+}
+.submenu-item-wrap,
+.submenu-item,
+.submenu-item-wrap:hover {
+  background: transparent !important;
+}
+.submenu-item:hover {
+  background: transparent;
+  border-radius: 16px;
+  box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
+    0px 2px 6px 0px rgba(45, 59, 67, 0.06);
+  transition: box-shadow 0.5s;
+}
+.submenu-item:hover .chevron-right {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 1s;
+}
+.navlink {
+  display: flex;
+  align-items: center;
+}

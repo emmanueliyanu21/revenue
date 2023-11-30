@@ -1,0 +1,82 @@
+@font-face {
+  font-family: "Degular";
+  src: url("./assets/fonts/DegularDemo-Regular.otf") format("opentype");
+}
+
+:root {
+  --chakra-fonts-heading: "Degular", sans-serif;
+}
+
+body {
+  font-family: "Degular", sans-serif !important;
+}
+
+.buttonElement {
+  background-color: #eff1f6 !important;
+  color: black;
+  border-radius: 50px !important;
+}
+
+.drawerWrapper {
+  margin: 20px !important;
+}
+
+.navDropdown {
+  position: absolute;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  width: 350px;
+}
+
+.dropdownImage {
+  border: 1px solid #f9f9f9;
+  border-radius: 8px;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 0px 1px rgba(0, 0, 0, 0.1);
+}
+
+.profileDropdownImage {
+  width: 18px;
+}
+
+.appDropdown {
+  left: 55rem;
+  margin-top: 80px;
+}
+
+.profileDropDown {
+  right: 0;
+  margin-right: 20px;
+  margin-top: 80px;
+}
+
+.chartBox {
+  max-width: 800px;
+  width: 100%;
+}
+
+.chartBox .recharts-default-legend {
+  display: none !important;
+}
+
+.custom-checkbox:focus {
+  box-shadow: 0 0 0 3px #131316;
+}
+
+@media (max-width: 800px) {
+  .wrapper {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .chartBox {
+    max-width: 400px;
+    width: 100%;
+  }
+  .summaryBox {
+    width: 100%;
+  }
+}
