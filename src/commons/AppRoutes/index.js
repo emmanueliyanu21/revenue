@@ -19,7 +19,7 @@ const NotFound = () => (
 
 function PageRoutes() {
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader loading={true} />}>
       <Routes>
         {routes.map(({ path, component: Component, isExact }) => (
           <Route

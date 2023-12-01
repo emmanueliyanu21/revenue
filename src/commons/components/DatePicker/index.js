@@ -3,10 +3,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
 
-function index({ startDate, selectDate }) {
+function index({ selectedDate, handleChange, id, maxDate = new Date() }) {
   return (
     <Box maxWidth="100%" w="100%">
-      <DatePicker selected={startDate} onChange={selectDate} />
+      <DatePicker
+        id={id || "date"}
+        selected={selectedDate}
+        onChange={handleChange && handleChange}
+        maxDate={maxDate}
+      />
     </Box>
   );
 }

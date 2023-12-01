@@ -18,6 +18,13 @@ const theme = extendTheme({
         focusBorderColor: "customColorScheme.500",
       },
     },
+    Button: {
+      baseStyle: {
+        _disabled: {
+          bg: "#DBDEE5",
+        },
+      },
+    },
   },
 });
 

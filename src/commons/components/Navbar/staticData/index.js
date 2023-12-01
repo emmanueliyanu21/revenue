@@ -18,6 +18,7 @@ const navData = {
           icon: "link",
           name: "Link in Bio",
           text: "Manage Your Link in Bio",
+          path: "/bio",
         },
         {
           icon: "store",
@@ -29,19 +30,19 @@ const navData = {
           icon: "mediaKit",
           name: "Media Kit",
           text: "Manage Your Media Kit",
-          path: "/analytics",
+          path: "/media-kit",
         },
         {
           icon: "invoice",
           name: "Invoicing",
           text: "Manage Your Invoicing",
-          path: "/analytics",
+          path: "/invoice",
         },
         {
           icon: "invoice",
           name: "Booking",
           text: "Manage Your Booking",
-          path: "/analytics",
+          path: "/booking",
         },
       ],
     },
@@ -57,26 +58,32 @@ const navData = {
         {
           icon: "bell",
           name: "Settings",
+          path: "/settings",
         },
         {
           icon: "bell",
           name: "Purchase History",
+          path: "/purchase-history",
         },
         {
           icon: "bell",
           name: "Refer and Earn",
+          path: "/refer-earn",
         },
         {
           icon: "bell",
           name: "Integrations",
+          path: "/integrations",
         },
         {
           icon: "bell",
           name: "Report Bug",
+          path: "/report-bug",
         },
         {
           icon: "bell",
           name: "Switch Account",
+          path: "/accounts",
         },
         {
           icon: "bell",

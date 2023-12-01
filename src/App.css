@@ -80,3 +80,18 @@ body {
     width: 100%;
   }
 }
+
+
+.fadeInAnimation{
+  animation: fadeIn 2.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+

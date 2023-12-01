@@ -19,7 +19,7 @@ function MobileNavBar() {
       <Flex>
         <Menu>
           {rightMenu.map((item, index) => (
-            <NavItem navItem={item} isMobile={true} key={index} />
+            <NavItem navItem={item} key={index} />
           ))}
           <MenuButton
             border={"none"}

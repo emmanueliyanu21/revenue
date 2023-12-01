@@ -15,12 +15,13 @@ function RevenueBalance({ data }) {
       gap={isMobile ? "20px" : "5rem"}
       alignItems={"flex-end"}
       flexWrap={isMobile ? "wrap" : "nowrap"}
+      transition={"all 1s"}
     >
       <Box>
         <Text mb={1} fontSize="14px" color="#56616B">
           Available balance
         </Text>
-        <Heading as="h1" size="xl" fontWeight="900">
+        <Heading as="h1" size="xl" fontWeight="900" minW={"200px"}>
           {Utils.currencyFormatter(data)}
         </Heading>
       </Box>

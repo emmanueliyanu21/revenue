@@ -25,10 +25,10 @@ function MobileMenuView({ isOpen, onClose }) {
                 {centerMenu.map((item, index) => (
                   <Box ml={"1rem"} key={index}>
                     <NavItem
+                      handleSelect={item.path && onClose}
                       navItem={item}
                       isCenterMenu={true}
                       key={item.name}
-                      isMobile={true}
                     />
                   </Box>
                 ))}

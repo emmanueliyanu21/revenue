@@ -3,7 +3,7 @@ import {
   FETCH_TRANSACTIONS_REQUEST,
   FETCH_TRANSACTIONS_SUCCESS,
   FETCH_TRANSACTIONS_FAILURE,
-  FETCH_TRANSACTIONS_LOADING,
+  SET_FILTER_VALUE,
 } from "../types/transactions.types";
 import { BASE_URL } from ".";
 
@@ -21,24 +21,21 @@ export const fetchTransactionsFailure = (error) => ({
   payload: error,
 });
 
-export const loading = (loading) => ({
-  type: FETCH_TRANSACTIONS_LOADING,
-  payload: loading,
+export const saveFilterInput = (filter) => ({
+  type: SET_FILTER_VALUE,
+  payload: filter,
 });
 
 export const fetchTransactions = () => {
   return (dispatch) => {
     dispatch(fetchTransactionsRequest());
-    dispatch(loading(true));
     axios
       .get(`${BASE_URL}/transactions`)
       .then((response) => {
         const data = response.data;
         dispatch(fetchTransactionsSuccess(data));
-        dispatch(loading(false));
       })
       .catch((error) => {
-        dispatch(loading(false));
         dispatch(fetchTransactionsFailure(error.message));
       });
   };

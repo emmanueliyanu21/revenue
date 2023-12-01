@@ -17,7 +17,7 @@ function Revenue() {
   }, [dispatch]);
   const marginValue = useBreakpointValue({ base: "20px", sm: "5rem" });
   return (
-    <Box>
+    <Box transition={"all 2s"}>
       <Loader loading={loading}>
         <Flex
           mb={marginValue}

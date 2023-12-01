@@ -36,16 +36,3 @@
 .cardBody {
   padding: 15px 1px!important;
 }
-/* .recharts-responsive-container{
-  min-width: 200px!important;
-  max-width: 500px;
-} */
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}

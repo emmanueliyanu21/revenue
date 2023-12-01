@@ -13,28 +13,25 @@ import {
 import MainStackIcon from "../../../icons";
 import "./styles.css";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import SubMenu from "./SubMenu";
 import { useSelector } from "react-redux";
 
-function Index({
-  navItem,
-  isCenterMenu,
-  activeItem = "",
-  isMobile = false,
-  handleSelect,
-}) {
+function Index({ navItem, isCenterMenu, activeItem = "", handleSelect }) {
   const { userData } = useSelector((state) => state.user);
+  const { pathname } = useLocation();
 
-  const isActive = activeItem === navItem.name;
-  const [isDesktop] = useMediaQuery("(min-width: 950px)");
+  const isActive = navItem.path
+    ? pathname === navItem.path
+    : activeItem === navItem.name;
+  const [isDesktop] = useMediaQuery("(min-width: 1180px)");
 
-  const getUserIcon = () => {
+  function UserInitials({ userData }) {
     if (userData?.email) {
       const { first_name, last_name } = userData;
       return `${first_name?.charAt(0) || ""}${last_name?.charAt(0) || ""}`;
     }
-  };
+  }
 
   return (
     <Flex
@@ -59,32 +56,30 @@ function Index({
               alignItems={"center"}
               className={`${isDesktop ? "desktop" : "mobile"} `}
             >
-              {
-                navItem.name === "settings" ? (
-                  <Flex
-                    gap={1}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                    className={`${navItem.name}`}
-                  >
-                    <Box className="usericon">
-                      {userData?.img ? (
-                        <Image src={userData.img} alt="profile" />
-                      ) : (
-                        <Text fontSize="1xl">{getUserIcon()}</Text>
-                      )}
-                    </Box>
-                    {isDesktop && <MainStackIcon type={navItem.icon} />}
-                  </Flex>
-                ) : (
-                  <MainStackIcon
-                    type={navItem.icon}
-                    color={isActive ? "#FFF" : null}
-                  />
-                )
-
-                // <Image src={navItem.icon} alt="icon" />
-              }
+              {navItem.name === "settings" ? (
+                <Flex
+                  gap={1}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  className={`${navItem.name}`}
+                >
+                  <Box className="usericon">
+                    {userData?.img ? (
+                      <Image src={userData.img} alt="profile" />
+                    ) : (
+                      <Text fontSize="1xl">
+                        <UserInitials userData={userData} />
+                      </Text>
+                    )}
+                  </Box>
+                  {isDesktop && <MainStackIcon type={navItem.icon} />}
+                </Flex>
+              ) : (
+                <MainStackIcon
+                  type={navItem.icon}
+                  color={isActive ? "#FFF" : null}
+                />
+              )}
               {isCenterMenu && (
                 <Center gap={1} className="submenu-container" height="40px">
                   {navItem.name}
@@ -110,7 +105,7 @@ function Index({
               )}
             </Flex>
           </MenuButton>
-          <SubMenu menuList={navItem.subMenu} isMobile />
+          <SubMenu menuList={navItem.subMenu} />
         </Menu>
       ) : (
         <NavLink to={navItem.path} className={"navlink"}>

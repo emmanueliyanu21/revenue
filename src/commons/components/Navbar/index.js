@@ -13,47 +13,57 @@ import NavItem from "./NavItem";
 import "./style.css";
 import MobileNavBar from "./MobileNavbar";
 import navData from "./staticData";
-
 import { useDispatch } from "react-redux";
 import { fetchUser } from "../../../store/actions/user.actions";
 
 function Navbar() {
+  const [navDelay, setNavDelay] = useState(true);
   const dispatch = useDispatch();
-
   const [activeMenu, setActiveMenu] = useState("Revenue");
-
-  const [isMobileView] = useMediaQuery("(max-width: 800px)");
-
+  const [isMobileView] = useMediaQuery("(max-width: 870px)");
   const { centerMenu, rightMenu } = navData;
 
   useEffect(() => {
     dispatch(fetchUser());
+    const timeout = setTimeout(() => {
+      setNavDelay(false);
+    }, 500);
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [dispatch]);
 
-  const navLogoComponent = () => (
-    <Box as="button">
-      <Image src={MainstackLogo} alt="icon" />
-    </Box>
-  );
+  function MainNavLogo() {
+    return (
+      <Box as="button">
+        <Image src={MainstackLogo} alt="icon" />
+      </Box>
+    );
+  }
 
   const handleMenuClick = (activeItem) => {
+    activeItem = activeItem === activeMenu ? "" : activeItem;
     setActiveMenu(activeItem);
   };
 
   return (
     <>
-      <Card className={`card sticky`} position="sticky">
+      <Card
+        className={`card sticky`}
+        position="sticky"
+        visibility={navDelay ? "hidden" : "visible"}
+      >
         <CardBody className="cardBody">
           {isMobileView ? (
             <Flex justifyContent={"space-between"}>
-              {navLogoComponent()}
+              {<MainNavLogo />}
               <Box h="20px">
                 <MobileNavBar />
               </Box>
             </Flex>
           ) : (
             <Flex justifyContent={"space-between"}>
-              {navLogoComponent()}
+              {<MainNavLogo />}
               <Flex maxW={"500px"}>
                 <Menu>
                   <Flex gap={5}>

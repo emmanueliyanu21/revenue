@@ -7,55 +7,68 @@ import {
 } from "@chakra-ui/react";
 import { Flex, Spacer, Box, Heading, Divider, Badge } from "@chakra-ui/react";
 import Transactiontable from "./transaction-table";
-import Filter from "../filter/transaction-filter";
+import Filter from "../filter";
 
 import { ChevronDownIcon, DownloadIcon } from "@chakra-ui/icons";
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTransactions } from "../../../../store/actions/transactions.actions";
+import {
+  fetchTransactions,
+  saveFilterInput,
+} from "../../../../store/actions/transactions.actions";
+import { filterInitialState } from "../../../../store/reducers/transactions.reducers";
 import EmptyContent from "./emptyContent";
 import Loader from "../../../../commons/components/Loader";
+import Utils from "../../../../commons/helpers/utils";
 
 function Transactions() {
   const dispatch = useDispatch();
-  const { transactions, loading } = useSelector((state) => state.transactions);
+  const {
+    transactions = [],
+    loading,
+    filter,
+  } = useSelector((state) => state.transactions);
+  const [data, setData] = useState(transactions);
 
   useEffect(() => {
     dispatch(fetchTransactions());
   }, [dispatch]);
 
-  const [filteredData, setFilteredData] = useState(transactions);
-  const handleFilterChange = (filterState) => {
+  const handleFilter = (filterState) => {
     const filteredData = transactions.filter((item) => {
-      const dateInRange =
-        new Date(item.date) >= new Date(filterState.startDate) &&
-        new Date(item.date) <= new Date(filterState.endDate);
+      const dateInRange = Utils.isDateWithinRange(item.date, [
+        filter.startDate,
+        filter.endDate,
+      ]);
 
-      const isTransactionTypeSelected = filterState.selectedTransactionTypes
-        .map((type) => type.toLowerCase())
-        .includes(item.metadata?.type.toLowerCase());
+      const isTransactionTypeSelected = filterState.transactionTypes
+        .map((type) => type.value.toLowerCase())
+        .includes(item.type.toLowerCase());
 
-      const isStatusTypeSelected = filterState.selectedStatusTypes
-        .map((status) => status.toLowerCase())
+      const isStatusTypeSelected = filterState.statusTypes
+        .map((status) => status.value.toLowerCase())
         .includes(item.status.toLowerCase());
 
-      return dateInRange && isTransactionTypeSelected && isStatusTypeSelected;
+      return filterState.count
+        ? dateInRange || isTransactionTypeSelected || isStatusTypeSelected
+        : true;
     });
+    setData(filteredData);
 
-    setFilteredData(filteredData);
+    dispatch(saveFilterInput({ ...filterState }));
   };
 
   useEffect(() => {
-    setFilteredData(transactions);
+    setData(transactions);
   }, [transactions]);
 
-  const submitClear = () => {
-    dispatch(fetchTransactions());
+  const handleClear = () => {
+    handleFilter(filterInitialState);
   };
 
   const isMobile = useBreakpointValue({ base: true, md: false });
-  const transactionsCount = filteredData?.length || 0;
+  const transactionsCount = data?.length || 0;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -67,7 +80,7 @@ function Transactions() {
         >
           <Box>
             <Heading as="h4" size="md">
-              {`${filteredData?.length || 0} Transactions`}
+              {`${transactionsCount} Transactions`}
             </Heading>
             <Text fontSize="sm">Your transactions for the last 7 days</Text>
           </Box>
@@ -81,14 +94,14 @@ function Transactions() {
                 onClick={onOpen}
               >
                 Filter
-                {filteredData?.length > 0 ? (
+                {filter.count ? (
                   <Badge
                     borderRadius={"50px"}
                     color={"#FFF"}
                     p={"2px 6px"}
                     backgroundColor={"#000"}
                   >
-                    {filteredData?.length > 0 && `${filteredData.length}`}
+                    {filter.count}
                   </Badge>
                 ) : (
                   ""
@@ -105,13 +118,13 @@ function Transactions() {
         <Filter
           isOpen={isOpen}
           onClose={onClose}
-          onApplyFilters={handleFilterChange}
+          onApplyFilters={handleFilter}
         />
         <Divider mb="0.5rem" orientation="horizontal" />
-        {transactionsCount > 0 ? (
-          <Transactiontable data={filteredData} />
+        {transactionsCount ? (
+          <Transactiontable data={data} />
         ) : (
-          <EmptyContent handleClear={submitClear} />
+          <EmptyContent handleClear={handleClear} />
         )}
       </Box>
     </Loader>
